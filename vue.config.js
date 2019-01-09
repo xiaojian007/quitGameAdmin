@@ -77,7 +77,8 @@ module.exports = {
         hotOnly: false,
         open:true,
         // 查阅 https://github.com/vuejs/vue-docs-zh-cn/blob/master/vue-cli/cli-service.md#配置代理
-        proxy: 'http://localhost:3001', // string | Object
+        proxy: 'https://easy-mock.com/mock/5bf7ba2690269b4e2ed47df9/buy', // string | Object
+        // proxy: 'http://localhost:3001', // string | Object
         before: app => { }
     },
 

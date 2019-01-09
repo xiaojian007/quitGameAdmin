@@ -13,7 +13,8 @@ import { getToken } from '@/utils/auth'
 //     BASE_API = '"http://193.112.153.155:3001"';
 // }
 const service = axios.create({
-    baseURL: "http://193.112.153.155:3001", // api的base_url
+    // baseURL: "http://193.112.153.155:3001", // api的base_url
+    baseURL: "https://easy-mock.com/mock/5bf7ba2690269b4e2ed47df9/buy", // api的base_url
     timeout: 5000 // 请求超时时间
 })
 
@@ -42,6 +43,7 @@ service.interceptors.response.use(
         if (res.code !== 1) {
             Message({
                 message: res.message,
+                // message: res.message,
                 type: 'error',
                 duration: 5 * 1000
             })
@@ -60,6 +62,7 @@ service.interceptors.response.use(
             }
             return Promise.reject('error')
         } else {
+            console.log(response.data)
             return response.data
         }
     },
