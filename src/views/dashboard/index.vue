@@ -15,7 +15,10 @@ export default {
       'name',
       'roles'
     ])
-  }
+  },
+  created() {
+    console.log(1)
+  },
 }
 </script>
 
