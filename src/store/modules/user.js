@@ -1,6 +1,6 @@
 import { login, logout, getInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { b64DecodeUnicode } from '@/utils/index'
+import { b64DecodeUnicode, b64EncodeUnicode } from '@/utils/index'
 
 const user = {
   state: {
@@ -61,14 +61,15 @@ const user = {
     //     })
     //   })
     // },
+    // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        console.log(state.token.split('.')[1])
         const str = b64DecodeUnicode(state.token.split('.')[1])
+        console.log(str)
         const obj = JSON.parse(str)
         // 验证返回的roles是否是一个非空数组
         if (obj.roles && obj.roles.length > 0) {
-          commit('SET_NAME', obj.username)
+          commit('SET_NAME', obj.userName)
           commit('SET_ROLES', obj.roles)
           commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
           resolve(obj)
