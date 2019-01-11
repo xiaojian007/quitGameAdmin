@@ -1,10 +1,18 @@
 /**
  * Created by lijian.
  */
-
+// 前端验证用户名
 export function isvalidUsername(str) {
-  const valid_map = ['admin', 'editor']
-  return valid_map.indexOf(str.trim()) >= 0
+  // const valid_map = ['admin', 'editor']
+  // console.log(valid_map.indexOf(str.trim()))
+  // return valid_map.indexOf(str.trim()) >= 0
+  // 判断是否是手机号
+  const myreg = /^[1][3,4,5,6,7,8][0-9]{9}$/
+  if (!myreg.test(str)) {
+    return 0
+  } else {
+    return -1
+  }
 }
 
 /* 合法uri*/

@@ -25,6 +25,7 @@
     "qiniu-webpack-plugin": "^0.4.2",
     "sass-loader": "^7.1.0",
     "svg-sprite-loader": "3.5.2",
+    "vue-particles": "^1.0.9",
     "vue-template-compiler": "^2.5.17",
     "webpack-bundle-analyzer": "^2.13.1"
   },

@@ -12,7 +12,7 @@
           <!-- <span class="svg-container svg-container_login">
                       <svg-icon icon-class="user" />
                   </span> -->
-          <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username" />
+          <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" :placeholder="loginDefault.name" />
         </el-form-item>
         <el-form-item prop="password">
           <span class="fontcontainer">
@@ -21,8 +21,12 @@
           <!-- <span class="svg-container">
                   <svg-icon icon-class="password"></svg-icon>
                   </span> -->
-          <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="password"></el-input>
-          <span class="validate" v-if="res">获取验证码</span>
+          <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" :placeholder="loginDefault.password"></el-input>
+          <span  v-show="sendAuthCode" class="validate" @click="authentication" v-if="res">获取验证码</span>
+          <span v-show="!sendAuthCode" class="validate"> 
+            <span class="auth_text_blue">
+              {{auth_time}} </span> 秒后重新获取
+            </span> 
           <!-- <span class="show-pwd" @click="showPwd"><svg-icon icon-class="eye" /></span> -->
           <span class="show-pwd iconfont icon-yanjing" @click="showPwd"></span>
         </el-form-item>
@@ -48,8 +52,27 @@
         <span @click="identify">立即登录</span>
       </div>
     </div>
+
+    <vue-particles
+      color="#fff"
+      :particleOpacity="0.7"
+      :particlesNumber="50"
+      shapeType="star"
+      :particleSize="5"
+      linesColor="#fff"
+      :linesWidth="2"
+      :lineLinked="true"
+      :lineOpacity="0.4"
+      :linesDistance="150"
+      :moveSpeed="3"
+      :hoverEffect="true"
+      hoverMode="grab"
+      :clickEffect="true"
+      clickMode="push"
+      >
+    </vue-particles>
     <!-- 背景视频 -->
-    <div class="homepage-hero-module">
+    <!-- <div class="homepage-hero-module">
       <div class="video-container">
         <div :style="fixStyle" class="filter"></div>
         <video :style="fixStyle" autoplay loop class="fillWidth" v-on:canplay="canplay">
@@ -60,7 +83,7 @@
           <img :style="fixStyle" src="//img0.c.yinyuetai.com/video/mv/180821/0/-M-5510b0a6b9d257f6c7d4aee5d67ba847_240x135.jpg" alt="">
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -70,9 +93,11 @@ import { isvalidUsername } from "@/utils/validate"
 export default {
   name: "login",
   data() {
+
+    // 前台验证用户名
     const validateUsername = (rule, value, callback) => {
       if (!isvalidUsername(value)) {
-        callback(new Error("请输入正确的用户名"))
+        callback(new Error("请输入正确的手机号"))
       } else {
         callback()
       }
@@ -86,8 +111,12 @@ export default {
     }
     return {
       loginForm: {
-        username: "admin",
-        password: "123456"
+        username: "",
+        password: ""
+      },
+      loginDefault: {
+        name: '手机号',
+        password: '密码'
       },
       loginRules: {
         username: [
@@ -106,7 +135,9 @@ export default {
       // 视频参数
       vedioCanPlay: false,
       fixStyle: '',
-      res: false
+      res: false,
+      sendAuthCode:true,/*布尔值，通过v-show控制显示‘获取按钮’还是‘倒计时’ */
+      auth_time: 0, /*倒计时 计数器*/
     }
   },
   methods: {
@@ -148,7 +179,13 @@ export default {
         //   message: '登录成功',
         //   type: 'success'
         // })
-        that.handleLogin()
+        if (that.res) {
+          // 调用注册接口
+          console.log(1)
+          that.handleLogin()
+        } else {
+          that.handleLogin()
+        }
       }, function () {
         console.log('验证失败')
         that.$message.error('验证失败')
@@ -160,42 +197,55 @@ export default {
     identify() {
       if (this.res) {
         this.pwdType = "password"
+        this.loginDefault.password = '密码'
       } else {
         this.pwdType = ""
+        this.loginDefault.password = '验证码'
       }
       this.res = !this.res
+    },
+    authentication() {
+      this.sendAuthCode = false
+      this.auth_time = 60
+      var auth_timetimer =  setInterval(()=>{
+          this.auth_time--
+          if(this.auth_time<=0){
+              this.sendAuthCode = true
+              clearInterval(auth_timetimer)
+          }
+      }, 1000)
     }
   },
   mounted() {
     this.GetImgValidate('captcha')
     // 背景视频
-    window.onresize = () => {
-      const windowWidth = document.body.clientWidth
-      const windowHeight = document.body.clientHeight
-      const windowAspectRatio = windowHeight / windowWidth
-      let videoWidth
-      let videoHeight
-      if (windowAspectRatio < 0.5625) {
-        videoWidth = windowWidth
-        videoHeight = videoWidth * 0.5625
-        this.fixStyle = {
-          height: windowWidth * 0.5625 + 'px',
-          width: windowWidth + 'px',
-          'margin-bottom': (windowHeight - videoHeight) / 2 + 'px',
-          'margin-left': 'initial'
-        }
-      } else {
-        videoHeight = windowHeight
-        videoWidth = videoHeight / 0.5625
-        this.fixStyle = {
-          height: windowHeight + 'px',
-          width: windowHeight / 0.5625 + 'px',
-          'margin-left': (windowWidth - videoWidth) / 2 + 'px',
-          'margin-bottom': 'initial'
-        }
-      }
-    }
-    window.onresize()
+    // window.onresize = () => {
+    //   const windowWidth = document.body.clientWidth
+    //   const windowHeight = document.body.clientHeight
+    //   const windowAspectRatio = windowHeight / windowWidth
+    //   let videoWidth
+    //   let videoHeight
+    //   if (windowAspectRatio < 0.5625) {
+    //     videoWidth = windowWidth
+    //     videoHeight = videoWidth * 0.5625
+    //     this.fixStyle = {
+    //       height: windowWidth * 0.5625 + 'px',
+    //       width: windowWidth + 'px',
+    //       'margin-bottom': (windowHeight - videoHeight) / 2 + 'px',
+    //       'margin-left': 'initial'
+    //     }
+    //   } else {
+    //     videoHeight = windowHeight
+    //     videoWidth = videoHeight / 0.5625
+    //     this.fixStyle = {
+    //       height: windowHeight + 'px',
+    //       width: windowHeight / 0.5625 + 'px',
+    //       'margin-left': (windowWidth - videoWidth) / 2 + 'px',
+    //       'margin-bottom': 'initial'
+    //     }
+    //   }
+    // }
+    // window.onresize()
   },
   computed: {
     // ssss () {
@@ -331,11 +381,12 @@ $light_gray: #eee;
   line-height: 47px;
   font-size: 14px;
   color: #fff;
-  width: 100px;
+  width: 140px;
   text-align: center;
   background: #000;
   z-index: 6;
   border-radius: 5px;
+  cursor: pointer;
 }
 </style>
 <style lang="scss">
@@ -470,23 +521,27 @@ $light_gray: #eee;
     top: 0;
   }
 }
-.homepage-hero-module,
-.video-container {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
+#particles-js{
+  width: 100%;
+  height: 100%;
 }
+// .homepage-hero-module,
+// .video-container {
+//   position: relative;
+//   height: 100vh;
+//   overflow: hidden;
+// }
 
-.video-container .poster img,
-.video-container video {
-  z-index: 0;
-  position: absolute;
-}
+// .video-container .poster img,
+// .video-container video {
+//   z-index: 0;
+//   position: absolute;
+// }
 
-.video-container .filter {
-  z-index: 1;
-  position: absolute;
-  background: rgba(0, 0, 0, 0.4);
-}
+// .video-container .filter {
+//   z-index: 1;
+//   position: absolute;
+//   background: rgba(0, 0, 0, 0.4);
+// }
 </style>
 
