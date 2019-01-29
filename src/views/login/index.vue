@@ -111,8 +111,8 @@ export default {
     }
     return {
       loginForm: {
-        username: "",
-        password: ""
+        username: "17621376429",
+        password: "123125"
       },
       loginDefault: {
         name: '手机号',

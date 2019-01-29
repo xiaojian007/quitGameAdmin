@@ -5,6 +5,8 @@ import store from "./store"
 // login背景粒子
 import VueParticles from 'vue-particles'
 Vue.use(VueParticles)
+// icon
+import '@/icons/index'
 //  reset CSS
 import "normalize.css/normalize.css"
 
