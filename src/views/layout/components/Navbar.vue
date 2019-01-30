@@ -2,6 +2,8 @@
   <el-menu class="navbar" mode="horizontal">
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
     <breadcrumb></breadcrumb>
+    <!-- 消息 -->
+    <!-- <MessageBox class="hidden-xs-only" :messages="messages"/> -->
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
         <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
@@ -13,8 +15,14 @@
             Home
           </el-dropdown-item>
         </router-link>
+          <el-dropdown-item disabled>
+            个人中心
+          </el-dropdown-item>
+          <el-dropdown-item disabled>
+            设置
+          </el-dropdown-item>
         <el-dropdown-item divided>
-          <span @click="logout" style="display:block;">LogOut</span>
+          <span @click="logout" style="display:block;">退出登录</span>
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -25,11 +33,18 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import MessageBox from '@/components/MessageBox'
 
 export default {
+  data () {
+    return {
+      messages: ''
+    }
+  },
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
+    MessageBox
   },
   computed: {
     ...mapGetters([

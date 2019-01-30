@@ -9,15 +9,35 @@ export const constantRouterMap = [
     { path: '/login', component: () => import('@/views/login/index'), hidden: true },
     { path: '/404', component: () => import('@/views/404'), hidden: true },
 
+    // {
+    //     path: '/',
+    //     component: Layout,
+    //     redirect: '/dashboard',
+    //     name: 'Dashboard',
+    //     hidden: true,
+    //     children: [{
+    //         path: 'dashboard',
+    //         name: 'dashboard',
+    //         component: () => import('@/views/dashboard/index'),
+    //         meta: {
+    //             title: 'dashboard',
+    //             icon: 'dashboard',
+    //             noCache: true
+    //         }
+    //     }]
+    // },
     {
         path: '/',
         component: Layout,
-        redirect: '/dashboard',
-        name: 'Dashboard',
-        hidden: true,
+        redirect: 'dashboard',
         children: [{
             path: 'dashboard',
-            component: () => import('@/views/dashboard/index')
+            component: () => import('@/views/dashboard/index'),
+            name: 'dashboard',
+            meta: {
+                title: 'Dashboard',
+                icon: 'dashboard'
+            }
         }]
     },
 
@@ -26,8 +46,7 @@ export const constantRouterMap = [
         component: Layout,
         redirect: '/example/table',
         name: 'Example',
-        // meta: { title: 'Example', icon: 'example' },
-        meta: { title: 'Example', icon: 'icon-fenleiorguangchangorqitatianchong' },
+        meta: { title: 'Example', icon: 'example' },
         children: [
             {
                 path: 'table',
@@ -39,8 +58,7 @@ export const constantRouterMap = [
                 path: 'tree',
                 name: 'Tree',
                 component: () => import('@/views/tree/index'),
-                // meta: { title: 'Tree', icon: 'tree' }
-                meta: { title: 'Tree', icon: 'icon-gengduotianchong' }
+                meta: { title: 'Tree', icon: 'tree' }
             }
         ]
     },
@@ -53,7 +71,7 @@ export const constantRouterMap = [
                 path: 'index',
                 name: 'Form',
                 component: () => import('@/views/form/index'),
-                meta: { title: 'Form', icon: 'icon-xinfengtianchong' }
+                meta: { title: 'Form', icon: 'form' }
             }
         ]
     },
@@ -65,7 +83,7 @@ export const constantRouterMap = [
         name: 'nested',
         meta: {
             title: 'nested',
-            icon: 'icon-wenbenbianjitianchong'
+            icon: 'nested'
         },
         children: [
             {

@@ -6,30 +6,34 @@
         <h3 class="title" v-if="!res">Login</h3>
         <h3 class="title" v-else>Register</h3>
         <el-form-item prop="username">
-          <span class="fontcontainer">
+          <!-- <span class="fontcontainer">
             <span class="iconfont icon-yonghu"></span>
+          </span> -->
+          <span class="fontcontainer svg-container svg-container_login">
+            <svg-icon icon-class="user" />
           </span>
-          <!-- <span class="svg-container svg-container_login">
-                      <svg-icon icon-class="user" />
-                  </span> -->
           <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" :placeholder="loginDefault.name" />
         </el-form-item>
         <el-form-item prop="password">
-          <span class="fontcontainer">
+          <!-- <span class="fontcontainer">
             <span class="iconfont icon-mima"></span>
+          </span> -->
+          <span class="svg-container fontcontainer">
+            <svg-icon icon-class="password"></svg-icon>
           </span>
-          <!-- <span class="svg-container">
-                  <svg-icon icon-class="password"></svg-icon>
-                  </span> -->
           <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" :placeholder="loginDefault.password"></el-input>
           <span  v-show="sendAuthCode" class="validate" @click="authentication" v-if="res">获取验证码</span>
           <span v-show="!sendAuthCode" class="validate"> 
             <span class="auth_text_blue">
               {{auth_time}} </span> 秒后重新获取
             </span> 
-          <!-- <span class="show-pwd" @click="showPwd"><svg-icon icon-class="eye" /></span> -->
-          <span class="show-pwd iconfont icon-yanjing" @click="showPwd"></span>
+          <span class="show-pwd" @click="showPwd"><svg-icon icon-class="eye" /></span>
+          <!-- <span class="show-pwd iconfont icon-yanjing" @click="showPwd"></span> -->
         </el-form-item>
+        <!-- <el-form-item class="fix-form-item">
+          <el-checkbox v-model="autoLogin">自动登录</el-checkbox>
+          <el-button type="text">忘记密码</el-button>
+        </el-form-item> -->
         <!-- click.native.prevent阻止默认事件 -->
         <!-- <el-form-item>
           <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
@@ -138,6 +142,7 @@ export default {
       res: false,
       sendAuthCode:true,/*布尔值，通过v-show控制显示‘获取按钮’还是‘倒计时’ */
       auth_time: 0, /*倒计时 计数器*/
+      autoLogin: false
     }
   },
   methods: {
@@ -338,7 +343,7 @@ $light_gray: #eee;
       }
     }
     .svg-container {
-      padding: 6px 5px 6px 15px;
+      // padding: 6px 5px 6px 15px;
       color: $dark_gray;
       vertical-align: middle;
       width: 30px;
