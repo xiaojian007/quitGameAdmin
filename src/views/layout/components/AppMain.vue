@@ -4,11 +4,14 @@
       <!-- <router-view :key="key"></router-view> -->
       <router-view></router-view>
     </transition>
+    <Footer-Info></Footer-Info>
   </section>
 </template>
 
 <script>
+import FooterInfo from './FooterInfo'
 export default {
+  components: { FooterInfo },
   name: 'AppMain',
   computed: {
     // key() {

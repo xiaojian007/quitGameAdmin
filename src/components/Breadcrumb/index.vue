@@ -48,4 +48,9 @@ export default {
       cursor: text;
     }
   }
+  @media screen and (max-width: 1000px) {
+    .app-breadcrumb.el-breadcrumb{
+        display: none;
+    }
+}
 </style>

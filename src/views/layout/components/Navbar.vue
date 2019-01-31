@@ -3,16 +3,16 @@
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
     <breadcrumb></breadcrumb>
     <!-- 消息 -->
-    <!-- <MessageBox class="hidden-xs-only" :messages="messages"/> -->
+    <MessageBox class="hidden-xs-only" :messages="messages"/>
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
         <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
-        <i class="el-icon-caret-bottom"></i>
+        {{name}}
       </div>
       <el-dropdown-menu class="user-dropdown" slot="dropdown">
         <router-link class="inlineBlock" to="/">
           <el-dropdown-item>
-            Home
+            主页
           </el-dropdown-item>
         </router-link>
           <el-dropdown-item disabled>
@@ -35,10 +35,43 @@ import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import MessageBox from '@/components/MessageBox'
 
+
 export default {
   data () {
     return {
-      messages: ''
+      messages: {
+        length: 8,
+        notify: [],
+        messages: [{
+          id: 1,
+          main: '斯达克警方和深刻搭街坊黑色盔甲的'
+        }, {
+          id: 2,
+          main: '斯达克警方和深刻搭街坊黑色盔甲的'
+        }, {
+          id: 3,
+          main: '斯达克警方和深刻搭街坊黑色盔甲的'
+        }, {
+          id: 4,
+          main: '斯达克警方和深刻搭街坊黑色盔甲的'
+        }],
+        schedule: [{
+          id: 1,
+          main: '斯达克警方和深刻搭街坊黑色盔甲的'
+        }, {
+          id: 2,
+          main: '斯达克警方和深刻搭街坊黑色盔甲的'
+        }, {
+          id: 3,
+          main: '斯达克警方和深刻搭街坊黑色盔甲的'
+        }, {
+          id: 4,
+          main: '斯达克警方和深刻搭街坊黑色盔甲的'
+        }]
+      },
+      home: {
+        title: ''
+      }
     }
   },
   components: {
@@ -48,9 +81,12 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'name',
+      'roles',
       'sidebar',
       'avatar'
     ])
+    
   },
   methods: {
     toggleSideBar() {
@@ -82,6 +118,19 @@ export default {
     top: 16px;
     color: red;
   }
+  .hidden-title{
+    display: inline-block;
+    position: absolute;
+    top: 5px;
+    right: 250px;
+  }
+  .hidden-xs-only{
+    display: inline-block;
+    position: absolute;
+    top: 15px;
+    height: 35px;
+    right: 150px;
+  }
   .avatar-container {
     height: 50px;
     display: inline-block;
@@ -90,11 +139,19 @@ export default {
     .avatar-wrapper {
       cursor: pointer;
       margin-top: 5px;
+      line-height: 40px;
+      /*弹性盒模型*/    
+      display:flex;
+      /*主轴居中对齐*/
+      justify-content: center;
+      /*侧轴居中对齐*/    
+      align-items: center; 
       position: relative;
       .user-avatar {
         width: 40px;
         height: 40px;
-        border-radius: 10px;
+        border-radius: 20px;
+        margin-right: 10px;
       }
       .el-icon-caret-bottom {
         position: absolute;

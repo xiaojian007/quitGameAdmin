@@ -35,13 +35,13 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.dashboard {
-  &-container {
-    margin: 30px;
-  }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
+.dashboard-container {
+  margin: 30px;
+  background-color: #f0f2f5;
+}
+@media screen and (max-width: 1000px) {
+  .dashboard-container{
+      margin: 0px;
   }
 }
 </style>

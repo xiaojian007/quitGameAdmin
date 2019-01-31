@@ -34,6 +34,7 @@
       </el-col>
     </el-row>
 
+
   </div>
 </template>
 
@@ -44,6 +45,9 @@
   import RaddarChart from './components/RaddarChart'
   import PieChart from './components/PieChart'
   import BarChart from './components/BarChart'
+
+
+  // import ChartCard from './components/ChartCard'
 
   // LineChart.chartData数据: setOption()调用
   const lineChartData = {
@@ -81,6 +85,7 @@
       RaddarChart,
       PieChart,
       BarChart
+      // ChartCard
     },
     data() {
       return {
@@ -99,7 +104,7 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   .dashboard-editor-container {
-    padding: 32px;
+    padding: 20px;
     background-color: rgb(240, 242, 245);
     .chart-wrapper {
       background: #fff;
