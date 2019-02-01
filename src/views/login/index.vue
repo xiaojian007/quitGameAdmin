@@ -210,6 +210,10 @@ export default {
       this.res = !this.res
     },
     authentication() {
+      this.$message({
+        message: '验证码已发送至手机号为'+ this.loginForm.username + '中',
+        type: 'success'
+      })
       this.sendAuthCode = false
       this.auth_time = 60
       var auth_timetimer =  setInterval(()=>{
@@ -472,7 +476,7 @@ $light_gray: #eee;
     top: 0;
     left: 0;
     width: 40px;
-    height: 39px;
+    height: 38px;
     background: #fff;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
     cursor: pointer;
@@ -480,21 +484,21 @@ $light_gray: #eee;
   }
 
   .slider:hover {
-    background: #1991fa;
+    background: #57616f;
   }
 
   .slider:hover .sliderIcon {
-    background-position: 0 -13px;
+    // background-position: 0 -13px;
   }
 
   .sliderIcon {
     position: absolute;
-    top: 15px;
-    left: 13px;
-    width: 14px;
-    height: 10px;
-    /* background: url(../img/icon_light.f13cff3.png) 0 -26px; */
-    background-size: 34px 471px;
+    top: 14px;
+    left: 10px;
+    width: 20px;
+    height: 12px;
+    background-image: url(../../assets/icon_light.png);
+    background-size: cover;
   }
 
   .refreshIcon {
@@ -504,8 +508,6 @@ $light_gray: #eee;
     width: 34px;
     height: 34px;
     cursor: pointer;
-    /* background: url(../img/icon_light.f13cff3.png) 0 -437px; */
-    background-size: 34px 471px;
   }
   #msg {
     width: 100%;

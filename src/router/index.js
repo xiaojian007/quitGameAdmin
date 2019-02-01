@@ -71,6 +71,14 @@ export const constantRouterMap = [
                 meta: {
                     title: '表格上传'
                 }
+            },
+            {
+                path: 'steptable',
+                component: () => import('@/views/steptable'),
+                name: 'Steptable',
+                meta: {
+                    title: 'Steps 步骤'
+                }
             }
         ]
     },

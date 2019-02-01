@@ -42,15 +42,13 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .wscn-http404-container{
-  transform: translate(-50%,-50%);
-  position: absolute;
-  top: 40%;
-  left: 50%;
+  padding: 150px 0;
 }
 .wscn-http404 {
   position: relative;
   width: 1200px;
   padding: 0 50px;
+  margin: 0 auto;
   overflow: hidden;
   .pic-404 {
     position: relative;
