@@ -18,6 +18,6 @@
       color: #666;
       text-align: center;
     }
-    margin-bottom: 30px;
+    margin: 30px 0;
   }
 </style>

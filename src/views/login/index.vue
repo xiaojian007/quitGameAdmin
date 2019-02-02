@@ -399,6 +399,36 @@ $light_gray: #eee;
 }
 </style>
 <style lang="scss">
+// 文字闪耀
+@keyframes  scratchy {
+  0% {
+    background-position: 0 0;
+  }
+  25% {
+    background-position: 0 0;
+  }
+  26% {
+    background-position: 20px -20px;
+  }
+  50% {
+    background-position: 20px -20px;
+  }
+  51% {
+    background-position: 40px -40px;
+  }
+  75% {
+    background-position: 40px -40px;
+  }
+  76% {
+    background-position: 60px -60px;
+  }
+  99% {
+    background-position: 60px -60px;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
 #captcha {
   .sliderContainer {
     position: relative;
@@ -410,6 +440,14 @@ $light_gray: #eee;
     background: #f7f9fa;
     color: #45494c;
     border: 1px solid #e4e7eb;
+    .sliderText{
+    	background: linear-gradient(left, #f71605, #e0f513); 
+      background: -webkit-linear-gradient(left, #f71605, #e0f513);
+      background: -o-linear-gradient(right, #f71605, #e0f513);
+		  -webkit-background-clip: text;
+		  -webkit-text-fill-color: transparent;
+		  animation:scratchy 0.53s linear forwards infinite;
+    }
   }
 
   .sliderContainer_active .slider {

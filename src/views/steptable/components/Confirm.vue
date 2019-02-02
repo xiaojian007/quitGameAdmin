@@ -1,74 +1,63 @@
 <template>
-  <el-form class="fix-form" :rules="rules" label-width="80px" :model="form">
-    <el-form-item label="收款人" prop="name">
-      <el-input v-model="form.name"></el-input>
+  <el-form class="fix-form" label-width="80px">
+    <el-alert class="fix-alert" title="确认转账后，资金将直接打入对方账户，无法退回。" type="warning" show-icon>
+    </el-alert>
+
+    <el-form-item label="收款人">
+      {{form.name}}
     </el-form-item>
 
-    <el-form-item class="money" label="收款账户" prop="account">
-      <el-select class="money-select" v-model="moneyValue" placeholder="请选择">
-        <el-option v-for="item in moneyOptions" :key="item.moneyValue" :label="item.label" :value="item.value">
-        </el-option>
-      </el-select>
-      <el-input class="money-input" v-model="form.account">
-      </el-input>
+    <el-form-item label="收款账户">
+      {{form.account}}
     </el-form-item>
 
-
-    <el-form-item label="支付金额" prop="money">
-      <!-- {{form.money | toThousands}} -->
-      <el-input v-model="form.money"></el-input>
+    <el-form-item label="支付金额">
+      {{form.money.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}} 元
     </el-form-item>
 
-    <el-form-item label="备注">
-      <el-input type="textarea" placeholder="无" v-model="form.remark"></el-input>
+    <el-form-item label="备注" prop="remark">
+      {{form.remark || '无'}}
     </el-form-item>
 
     <el-form-item class="fix-form-item">
-      <el-button type="primary" @click="next">下一步</el-button>
+      <el-button type="primary" @click="submit" :loading="isSubmit">
+        提交
+      </el-button>
+      <el-button @click="previous">上一步</el-button>
     </el-form-item>
+
   </el-form>
 </template>
 
 <script>
+import { assets } from '@/api/table'
 export default {
   data() {
     return {
-      isSubmit: false,
-      rules: {
-        name: [
-          { required: true, message: '请输入收款人姓名', trigger: 'blur' },
-          { min: 1, max: 10, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-        ],
-        account: [
-          { required: true, message: '请输入收款账户', trigger: 'blur' }
-        ],
-        money: [
-          { required: true, message: '请输入支付金额', trigger: 'blur' }
-        ]
-      },
-      moneyOptions: [{
-        value: '0',
-        label: '支付宝'
-      }, {
-        value: '1',
-        label: '银行卡'
-      }],
-      moneyValue: '支付宝',
-      select: 'alipay'
+      isSubmit: false
     }
   },
   methods: {
-    next () {
-      // this.$refs.form.validate(valid => {
-      //   if (!valid) return false
-      //   this.$router.push({ name: 'step-form-confirm' })
-      // })
+    submit() {
+      this.isSubmit = true
+      assets(this.form).then(res => {
+        setTimeout(() => {
+          this.isSubmit = false
+          this.$emit('onFormSumbit')
+          this.$emit('listenToNext', 'Result')
+        }, 1000)
+      })
+    },
+    previous() {
+      this.$emit('listenToNext', 'Info')
     }
   },
   props: {
     form: {
       type: Object
     }
+  },
+  computed: {
   }
 }
 </script>

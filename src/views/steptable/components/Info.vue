@@ -1,8 +1,5 @@
 <template>
-  <el-form class="fix-form" :rules="rules" label-width="80px" :model="form">
-    <el-alert class="fix-alert" title="确认转账后，资金将直接打入对方账户，无法退回。" type="warning" show-icon>
-    </el-alert>
-
+  <el-form class="fix-form" :rules="rules" ref="form" label-width="80px" :model="form">
     <el-form-item label="收款人" prop="name">
       <el-input v-model="form.name"></el-input>
     </el-form-item>
@@ -12,23 +9,27 @@
         <el-option v-for="item in moneyOptions" :key="item.moneyValue" :label="item.label" :value="item.value">
         </el-option>
       </el-select>
-      <el-input class="money-input" v-model="form.account"></el-input>
+      <el-input class="money-input" v-model="form.account">
+      </el-input>
     </el-form-item>
+
 
     <el-form-item label="支付金额" prop="money">
       <!-- {{form.money | toThousands}} -->
-      <el-input v-model="form.money"></el-input>
+      <el-input type="number" v-model="form.money"></el-input>
     </el-form-item>
 
     <el-form-item label="备注">
-      <el-input type="textarea" placeholder="无" v-model="form.remark"></el-input>
+      <el-input
+        placeholder="无"
+        type="textarea"
+        :autosize="{ minRows: 4, maxRows: 6}"
+        v-model="form.remark">
+      </el-input>
     </el-form-item>
 
     <el-form-item class="fix-form-item">
-      <el-button type="primary" @click="submit" :loading="isSubmit">
-        提交
-      </el-button>
-      <el-button @click="previous" plain>上一步</el-button>
+      <el-button type="primary" @click="next">下一步</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -57,22 +58,16 @@ export default {
         value: '1',
         label: '银行卡'
       }],
-      moneyValue: '支付宝'
+      moneyValue: '支付宝',
+      select: 'alipay'
     }
   },
   methods: {
-    submit() {
-      this.isSubmit = true
-      this.submitForm(this.form).then(res => {
-        setTimeout(() => {
-          this.isSubmit = false
-          this.$emit('onFormSumbit')
-          this.$router.push({ name: 'step-form-result' })
-        }, 1000)
+    next () {
+      this.$refs.form.validate(valid => {
+        if (!valid) return false
+        this.$emit('listenToNext', 'Confirm')
       })
-    },
-    previous() {
-      this.$router.push({ name: 'step-form-info' })
     }
   },
   props: {
@@ -88,12 +83,13 @@ export default {
 .money > div.el-form-item__content {
   display: flex;
 }
-.money > div.el-form-item__content .money-select{
-  width: 30%;
+.money > div.el-form-item__content .money-select {
+  width: 25%;
 }
 .money > div.el-form-item__content .money-select input {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+  background: #eee;
 }
 .money .money-input input {
   border-left: 0;
@@ -106,3 +102,31 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+.fix-form {
+  width: 100%;
+  margin: 40px 0 0 0;
+}
+
+.fix-alert {
+  margin: 20px 0;
+  line-height: 1;
+
+  /deep/ {
+    .el-alert__closebtn {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.fix-form-item {
+
+  @media screen and (max-width: 769px) {
+    /deep/ {
+      .el-form-item__content {
+        margin-left: 0 !important;
+      }
+    }
+  }
+}
+</style>

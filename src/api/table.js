@@ -15,3 +15,11 @@ export function fetchList(query) {
     params: query
   })
 }
+
+export function assets(params) {
+  return request({
+    url: '/assets',
+    method: 'post',
+    params
+  })
+}

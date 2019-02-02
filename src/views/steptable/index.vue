@@ -10,10 +10,9 @@
           </el-steps>
         </el-col>
         <el-col :xs="24" :sm="15" :md="14" :lg="11" :xl="8">
-          <component :is="currentComponent" :form="form" @onFormSumbit="resetFields"/>
+            <component @listenToNext='listenToNext' :is="currentComponent" :form="form" @onFormSumbit="resetFields"/>
         </el-col>
       </el-row>
-      <el-button @click="next">下一步</el-button>
     </article>
   </div>
 </template>
@@ -26,7 +25,7 @@ export default {
   data() {
     return {
       active: 0,
-      currentComponent: 'Confirm',
+      currentComponent: 'Info',
       form: {
         name: '',
         account: '',
@@ -41,15 +40,29 @@ export default {
     Result
   },
   methods: {
-    next() {
-      if (this.active++ > 2) this.active = 0;
-    },
     resetFields () {
       this.form = {
         name: '',
         account: '',
         money: null,
         remark: ''
+      }
+    },
+    listenToNext (data) {
+      this.currentComponent = data
+      switch (data) {
+        case 'Info':
+          this.active = 1
+          this.currentComponent = 'Info'
+          break
+        case 'Confirm':
+          this.active = 2
+          this.currentComponent = 'Confirm'
+          break
+        case 'Result':
+          this.active = 3
+          this.currentComponent = 'Result'
+          break
       }
     }
   }

@@ -33,8 +33,6 @@
         </div>
       </el-col>
     </el-row>
-
-
   </div>
 </template>
 
@@ -45,9 +43,6 @@
   import RaddarChart from './components/RaddarChart'
   import PieChart from './components/PieChart'
   import BarChart from './components/BarChart'
-
-
-  // import ChartCard from './components/ChartCard'
 
   // LineChart.chartData数据: setOption()调用
   const lineChartData = {
@@ -85,7 +80,6 @@
       RaddarChart,
       PieChart,
       BarChart
-      // ChartCard
     },
     data() {
       return {
