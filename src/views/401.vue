@@ -1,91 +1,63 @@
 <template>
-  <div class="errPage-container">
-    <el-button icon="arrow-left" class="pan-back-btn" @click="back">返回</el-button>
-    <el-row>
-      <el-col :span="12">
-        <h1 class="text-jumbo text-ginormous">Oops!</h1>
-        gif来源<a href="https://zh.airbnb.com/" target="_blank">airbnb</a> 页面
-        <h2>你没有权限去该页面</h2>
-        <h6>如有不满请联系你领导</h6>
-        <ul class="list-unstyled">
-          <li>或者你可以去:</li>
-          <li class="link-type">
-            <router-link to="/dashboard">回首页</router-link>
-          </li>
-          <li class="link-type"><a href="https://www.taobao.com/">随便看看</a></li>
-          <li><a href="#" @click.prevent="dialogVisible=true">点我看图</a></li>
+    <div id="index">
+        <ul>
+            <li v-for="(item, index) in imgArr"
+                :key="index">
+                <img :src="item" />
+            </li>
         </ul>
-      </el-col>
-      <el-col :span="12">
-        <img :src="errGif" width="313" height="428" alt="Girl has dropped her ice cream.">
-      </el-col>
-    </el-row>
-    <el-dialog :visible.sync="dialogVisible" title="随便看">
-      <img :src="ewizardClap" class="pan-img">
-    </el-dialog>
-  </div>
+        <p>测试测试测试</p>
+        <p>测试测试测试</p>
+        <p>测试测试测试</p>
+        <p>测试测试测试</p>
+        <img :src="imgArr[2]" />
+    </div>
 </template>
-
 <script>
-import errGif from '@/assets/401_images/401.gif'
-
+import Viewer from 'viewerjs';
+import 'viewerjs/dist/viewer.css';
 export default {
-  name: 'Page401',
-  data() {
-    return {
-      errGif: errGif + '?' + +new Date(),
-      ewizardClap: 'https://wpimg.wallstcn.com/007ef517-bafd-4066-aae4-6883632d9646',
-      dialogVisible: false
-    }
-  },
-  methods: {
-    back() {
-      if (this.$route.query.noGoBack) {
-        this.$router.push({ path: '/dashboard' })
-      } else {
-        this.$router.go(-1)
-      }
-    }
-  }
+    name: 'Viewer',
+    data() {
+        return {
+            imgArr: [
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538988692454&di=a6086c2c80a99ec0a50ed3696776f39e&imgtype=0&src=http%3A%2F%2Fpic165.nipic.com%2Ffile%2F20180522%2F12398452_105538125000_2.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539582468&di=78699558c94fff160ae1fa5cc73be9fa&imgtype=jpg&er=1&src=http%3A%2F%2Fpic166.nipic.com%2Ffile%2F20180522%2F12398452_105521854000_2.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538987750399&di=8c77894bad73fbc3c1c82ebde9309ff2&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dpixel_huitu%252C0%252C0%252C294%252C40%2Fsign%3D09e9a51105f41bd5ce5ee0b438a2e4a7%2Ffaedab64034f78f083c1d8c972310a55b2191cc5.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538987750397&di=70b58f375170a335264545cdea00aec9&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dpixel_huitu%252C0%252C0%252C294%252C40%2Fsign%3D79013c1e743e6709aa0d4dbf52bffa51%2Fb7fd5266d0160924759f6222df0735fae6cd3455.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1538987750397&di=106be7a370b48812e9e7ed19e9c8eb16&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dpixel_huitu%252C0%252C0%252C294%252C40%2Fsign%3D896dc4cbde62853586edda61f99713aa%2Fd009b3de9c82d158de82e7888b0a19d8bc3e4282.jpg'
+            ]
+        };
+    },
+    mounted() {
+        const ViewerDom = document.getElementById('index');
+        const viewer = new Viewer(ViewerDom, {
+            // 配置
+        })
+    },
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-  .errPage-container {
-    width: 800px;
-    max-width: 100%;
-    margin: 100px auto;
-    .pan-back-btn {
-      background: #008489;
-      color: #fff;
-      border: none!important;
-    }
-    .pan-gif {
-      margin: 0 auto;
-      display: block;
-    }
-    .pan-img {
-      display: block;
-      margin: 0 auto;
-      width: 100%;
-    }
-    .text-jumbo {
-      font-size: 60px;
-      font-weight: 700;
-      color: #484848;
-    }
-    .list-unstyled {
-      font-size: 14px;
-      li {
-        padding-bottom: 5px;
-      }
-      a {
-        color: #008489;
-        text-decoration: none;
-        &:hover {
-          text-decoration: underline;
+<style lang="scss">
+#index {
+    width: 100%;
+    ul {
+        li {
+            width: 24%;
+            height: 200px;
+            margin-right: 1%;
+            margin-bottom: 20px;
+            cursor: pointer;
+            display: inline-block;
+            &:nth-child(4n) {
+                margin-right: 0;
+            }
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
         }
-      }
     }
-  }
+}
 </style>

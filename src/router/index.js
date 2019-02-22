@@ -191,6 +191,24 @@ export const constantRouterMap = [
             meta: { title: '401', noCache: true }
         },
         {
+            path: '402',
+            component: () => import('@/views/402'),
+            name: '402',
+            meta: {
+                title: '402',
+                noCache: true
+            }
+        },
+        {
+            path: '403',
+            component: () => import('@/views/403'),
+            name: '403',
+            meta: {
+                title: '403',
+                noCache: true
+            }
+        },
+        {
             path: '404',
             component: () => import('@/views/404'),
             name: '404',
